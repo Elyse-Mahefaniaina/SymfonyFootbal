@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title "PLayer transfert" %}
+
+{% block body %}
+    <h1>Transfer Player</h1>
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.surname) }}
+        {{ form_widget(form.surname, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.surname) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.team) }}
+        {{ form_widget(form.team, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.team) }}
+    </div>
+    <button class="btn btn-primary" type="submit">Valider</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% set have_pages = pagination.haveToPaginate() %}
+{% set current_page = pagination.getCurrentPageNumber() %}
+{% set previous_page = current_page > 1 ? current_page - 1 : 1 %}
+{% set next_page = current_page < pagination.getLastPage() ? current_page + 1 : pagination.getLastPage() %}
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if have_pages %}
+            <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous_page})) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item {% if current_page == 1 %}active{% endif %}">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+            </li>
+
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+
+            {% if current_page > 3 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): current_page - 2})) }}">{{ current_page - 2 }}</a>
+                </li>
+            {% endif %}
+            {% if current_page > 2 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): current_page - 1})) }}">{{ current_page - 1 }}</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ current_page }}</span>
+            </li>
+
+            {% if current_page < pagination.getLastPage() - 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): current_page + 1})) }}">{{ current_page + 1 }}</a>
+                </li>
+            {% endif %}
+            {% if current_page < pagination.getLastPage() - 2 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): current_page + 2})) }}">{{ current_page + 2 }}</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+
+            <li class="page-item {% if current_page == pagination.getLastPage() %}active{% endif %}">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): pagination.getLastPage()})) }}">{{ pagination.getLastPage() }}</a>
+            </li>
+
+            <li class="page-item {% if current_page == pagination.getLastPage() %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next_page})) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            <li class="page-item disabled"><span class="page-link">1</span></li>
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item disabled"><span class="page-link">{{ current_page }}</span></li>
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item disabled"><span class="page-link">{{ pagination.getLastPage() }}</span></li>
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+    </ul>
+</nav>

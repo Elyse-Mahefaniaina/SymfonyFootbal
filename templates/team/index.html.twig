@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title "List Teams" %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4">Teams</h1>
+        <table class="table table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Balance</th>
+                <th>Players</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for team in pagination %}
+                <tr>
+                    <td>{{ team.name }}</td>
+                    <td>{{ team.country.name }}</td>
+                    <td>{{ team.moneyBalance }}</td>
+                    <td>
+                        <ul>
+                            {% for player in team.players %}
+                                <li>{{ player.name }} {{ player.surname }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    </div>
+{% endblock %}
